@@ -41,6 +41,19 @@ class UserSeeder extends Seeder
             ],
         ];
 
+
+
         User::insert($data);
+
+        $admin=User::find(1);
+        $admin->assignRole('admin');
+
+        $users=User::where('id' , '<>' , 1)->get();
+
+        foreach($users as $user)
+        {
+            $user->assignRole('user');
+
+        }
     }
 }
