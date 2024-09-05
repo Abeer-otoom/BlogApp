@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardCotroller;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,14 +24,17 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+
+    Route::get('/dashboard',  [DashboardCotroller::class , 'index'])->name('dashboard');
 });
 
 Route::group(['middleware' => 'auth'], function () {
 
+        // Route::get('home')
+
 Route::group(['middleware' => ['permissions:create_post']], function () {
         Route::get('posts/create' , 'PostController@create')->name('posts.create');
+        Route::post('posts/store' , [PostController::class , 'store'])->name('posts.store');
+
     });
 });
