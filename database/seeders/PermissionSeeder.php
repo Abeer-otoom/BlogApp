@@ -14,11 +14,11 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(['name' => 'create post']);
-        Permission::create(['name' => 'update post']);
-        Permission::create(['name' => 'delete post']);
-        Permission::create(['name' => 'show post']);
-        Permission::create(['name'=>'create comment']);
+        Permission::create(['name' => 'create_post']);
+        Permission::create(['name' => 'update_post']);
+        Permission::create(['name' => 'delete_post']);
+        Permission::create(['name' => 'show_post']);
+        Permission::create(['name'=>'create_comment']);
 
         //Assign A Permission To A Role
 
