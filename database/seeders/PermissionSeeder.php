@@ -23,7 +23,7 @@ class PermissionSeeder extends Seeder
         //Assign A Permission To A Role
 
         $role =Role::findByName('Admin');
-        $role->syncPermissions([1,2,3,4]);
+        $role->syncPermissions([1,2,3,4,5]);
 
 
         $role =Role::findByName('User');

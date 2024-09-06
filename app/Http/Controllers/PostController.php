@@ -36,8 +36,9 @@ class PostController extends Controller
             'content'=>$input['content'],
             'user_id'=> Auth()->id(),
         ]);
+        session()->flash('success', 'Post created successfully!');
 
-        return redirect(route('dashboard'))->with(['message'=>'Post Create Succesfully']);
+        return redirect(route('dashboard'));
     }
 
     /**
@@ -61,7 +62,24 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post=Post::find($id);
+        $input=$request->all();
+
+        if (empty($post)) {
+            session()->flash('error', 'Post not found');
+
+            return redirect(route('dashboard'));
+        }
+
+        $post->update([
+
+            'title'=>$input['title'],
+            'content'=>$input['content'],
+        ]);
+
+        session()->flash('success', 'Post updated successfully!');
+
+        return redirect(route('dashboard'));
     }
 
     /**
@@ -69,6 +87,19 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post=Post::find($id);
+
+        if (empty($post)) {
+            session()->flash('error', 'Post not found');
+
+            return redirect(route('dashboard'));
+        }
+
+        $post->delete();
+
+        session()->flash('success', 'Post deleted successfully!');
+
+        return redirect(route('dashboard'));
+
     }
 }

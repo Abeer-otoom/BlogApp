@@ -14,25 +14,29 @@
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 overflow-hidden  sm:rounded-lg">
 
+            @if (session('success'))
+                <div class="alert alert-success justify-content-md-start">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="d-flex">
 
-                @if(auth()->user()->can('create_post') )
-                <button type="button" class="btn btn-primary ml-auto " data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fa-solid fa-plus"></i> Post
-                  </button>
-              @endif
+
+
+                @if (auth()->user()->can('create_post'))
+                    <button type="button" class="btn btn-primary ml-auto " data-bs-toggle="modal" id="createPostButton"
+                        data-bs-target="#postModal">
+                        <i class="fa-solid fa-plus"></i> Post
+                    </button>
+                @endif
 
 
 
             </div>
-
-            {{--  <div class="bg-white ">  --}}
-                <x-welcome :posts="$posts"  />
-            {{--  </div>  --}}
+            <x-welcome :posts="$posts" />
         </div>
     </div>
 
 
 </x-app-layout>
-
-

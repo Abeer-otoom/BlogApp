@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardCotroller;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,24 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => ['permissions:create_post']], function () {
         Route::get('posts/create' , 'PostController@create')->name('posts.create');
         Route::post('posts/store' , [PostController::class , 'store'])->name('posts.store');
+
+    });
+
+
+    Route::group(['middleware' => ['permissions:delete_post']], function () {
+        Route::delete('posts/destroy/{id}' , [PostController::class , 'destroy'])->name('posts.destroy');
+
+    });
+
+    Route::group(['middleware' => ['permissions:update_post']], function () {
+        Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
+
+    });
+
+
+    Route::group(['middleware' => ['permissions:create_comment']], function () {
+        Route::get('comments/create' , 'CommentController@create')->name('comments.create');
+        Route::post('comments/store/{id}' , [CommentController::class , 'store'])->name('comments.store');
 
     });
 });
