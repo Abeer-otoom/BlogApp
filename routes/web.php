@@ -56,4 +56,16 @@ Route::group(['middleware' => ['permissions:create_post']], function () {
         Route::post('comments/store/{id}' , [CommentController::class , 'store'])->name('comments.store');
 
     });
+
+    Route::group(['middleware' => ['permissions:update_comment']], function () {
+
+    });
+    Route::put('comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+
+
+    Route::group(['middleware' => ['permissions:delete_comment']], function () {
+        Route::delete('comments/destroy/{id}' , [CommentController::class , 'destroy'])->name('comments.destroy');
+
+
+    });
 });

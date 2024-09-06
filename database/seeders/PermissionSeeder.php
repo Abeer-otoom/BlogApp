@@ -18,17 +18,18 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'update_post']);
         Permission::create(['name' => 'delete_post']);
         Permission::create(['name' => 'show_post']);
-        Permission::create(['name'=>'create_comment']);
+        Permission::create(['name' => 'create_comment']);
+        Permission::create(['name' => 'update_comment']);
+        Permission::create(['name' => 'delete_comment']);
+
 
         //Assign A Permission To A Role
 
-        $role =Role::findByName('Admin');
-        $role->syncPermissions([1,2,3,4,5]);
+        $role = Role::findByName('Admin');
+        $role->syncPermissions([1, 2, 3, 4, 5, 6, 7]);
 
 
-        $role =Role::findByName('User');
-        $role->givePermissionTo([4 , 5]);
-
-
+        $role = Role::findByName('User');
+        $role->givePermissionTo([4, 5, 6, 7]);
     }
 }

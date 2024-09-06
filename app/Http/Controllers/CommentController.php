@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -27,7 +28,17 @@ class CommentController extends Controller
      */
     public function store(Request $request , $id)
     {
-        dd($id);
+        $postId=$id;
+
+        $input=$request->all();
+        Comment::create([
+            'content'=>$input['comment_content'],
+            'user_id'=> Auth()->id(),
+            'post_id'=>$postId
+        ]);
+        session()->flash('success', 'Comment created successfully!');
+
+        return redirect(route('dashboard'));
     }
 
     /**
@@ -51,7 +62,23 @@ class CommentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $comment=Comment::find($id);
+        $input=$request->all();
+
+        if (empty($comment)) {
+            session()->flash('error', 'Comment not found');
+
+            return redirect(route('dashboard'));
+        }
+
+        $comment->update([
+
+            'content'=>$input['commentContentInput'],
+        ]);
+
+        session()->flash('success', 'Comment updated successfully!');
+
+        return redirect(route('dashboard'));
     }
 
     /**
@@ -59,6 +86,18 @@ class CommentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $comment=Comment::find($id);
+
+        if (empty($comment)) {
+            session()->flash('error', 'Comment not found');
+
+            return redirect(route('dashboard'));
+        }
+
+        $comment->delete();
+
+        session()->flash('success', 'Comment deleted successfully!');
+
+        return redirect(route('dashboard'));
     }
 }
